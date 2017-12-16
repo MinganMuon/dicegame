@@ -17,7 +17,9 @@
     let Application = PIXI.Application,
     loader = PIXI.loader,
     resources = PIXI.loader.resources,
-    Sprite = PIXI.Sprite;
+    Sprite = PIXI.Sprite,
+    Texture = PIXI.Texture,
+    TextureCache = PIXI.utils.TextureCache;
 
 	let type = "WebGL";
     if(!PIXI.utils.isWebGLSupported()){
@@ -35,7 +37,7 @@
 
     document.body.appendChild(app.view);
 
-    loader
+    /* loader
         .add("img/rednumbers.json")
         .load(setup);
     
@@ -49,9 +51,42 @@
             rn.on('pointerdown', rnOnClick);
             app.stage.addChild(rn);
         }
+    } */
+
+    loader
+        .add("img/red_tiles.png")
+        .load(setup);
+
+    let redtiles = [];
+    function setup() {
+        let red_tiles_tex = TextureCache["img/red_tiles.png"];
+
+        // helper function
+        var doredtile = function(i) {
+            let j = i; if (j == 13) { j = 0; }
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            tile_tex = new Texture(red_tiles_tex, rectangle)
+            let tile = new Sprite(tile_tex);
+            tile.y = 10;
+            tile.x = 10 + (i-2)*tile.width + 5*(i-2);
+            tile.interactive = true;
+            tile.on('pointerdown', tileOnClick);
+            tile.color = "red";
+            tile.number = i;
+            tile.checked = false;
+            redtiles.push(tile);
+            app.stage.addChild(tile);
+        }
+
+        // init redtiles
+        for (i = 13; i > 1; i--){
+            doredtile(i);
+        }
+
     }
 
-    function rnOnClick () {
+    function tileOnClick () {
+        this.checked = true;
         this.visible = false;
     }
 
