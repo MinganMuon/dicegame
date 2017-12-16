@@ -14,12 +14,47 @@
 <body>
 
 <script>
-	let type = "WebGL"
+    let Application = PIXI.Application,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    Sprite = PIXI.Sprite;
+
+	let type = "WebGL";
     if(!PIXI.utils.isWebGLSupported()){
-      type = "canvas"
+      type = "canvas";
     }
 
-    PIXI.utils.sayHello(type)
+    PIXI.utils.sayHello(type);
+
+    let app = new Application({transparent: true});
+
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+    app.renderer.autoResize = true;
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(app.view);
+
+    loader
+        .add("img/rednumbers.json")
+        .load(setup);
+    
+    function setup() {
+        var id = loader.resources["img/rednumbers.json"].textures; 
+        for (i = 0; i < 10; i++) { 
+            let rn = new Sprite(id["red_" + i + ".png"]);
+            rn.y = 10;
+            rn.x = 10 + i*rn.width + 5*i;
+            rn.interactive = true;
+            rn.on('pointerdown', rnOnClick);
+            app.stage.addChild(rn);
+        }
+    }
+
+    function rnOnClick () {
+        this.visible = false;
+    }
+
 </script>
 
 </body>
