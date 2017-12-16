@@ -8,17 +8,18 @@
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
 </head>
+
+<script src="pixi/pixi.min.js"></script>
+
 <body>
 
-<canvas id="myCanvas" width="300" height="215"></canvas>
-
 <script>
-	var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    
-    var pad_img =  document.createElement("img");
-    pad_img.src = "./QwixxScorepad-300x215.jpg";
-    ctx.drawImage(pad_img, 0, 0);
+	let type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+      type = "canvas"
+    }
+
+    PIXI.utils.sayHello(type)
 </script>
 
 </body>
