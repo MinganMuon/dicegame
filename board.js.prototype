@@ -1,6 +1,50 @@
-Prototyping for board.js
+=== Prototyping for board.js
 
 Contains gameboard creation, manipulation, access, and helper functions
 Does not cover dice rolls, turns, or multiple boards
 Does calculate score of current board
 
+Basically a snapshot of a board state
+    - like taking a real life paper game sheet from a running game and looking at it
+
+=== Code prototype
+
+board {
+    rows = [redrow = new row, 
+            yellowrow = new row,
+            greenrow = new row,
+            bluerow = new row]
+    penalties = 0 - limit of four penalty points
+
+    clearboard() - initializes/clears rows and penalties
+    
+    setboard(rows, penalties) - sets board to input
+        - helper functions for setboard()?
+        - functions to set individual rows?
+            - put them in row object perhaps
+    
+    - functions to make individual moves on the board
+    - functions to get legal moves/check legality of proposed move
+        - should the last two be somewhere else (move.js perhaps)?
+            - because it involves moves on the board not a snapshot of the board
+    
+    - functions to calculate score
+}
+
+row {
+    startnum - number on left
+    endnum - number on right
+    nums = Array, length abs(endnum-startnum) (assuming it's zero-indexed)
+    nums = [true, false, ...] - is that number checked off?
+    rowlocked = bool - is the row locked? - it's assumed that the board's player locked the board and gained the extra checkmark.
+
+    islockable() - is this row lockable (has more than reqchecktolock checkmarks)?
+}
+
+=== Data prototype
+
+penaltypoint = -5 // -5 points for each penalty point
+checkmarktopoint = [ // map (number of checkmarks) -> (points for the row)
+    1 to 1, 2 to 3, 3 to 6, etc. - this is equivalent to the function y = (1/2)(x)(x+1)
+]
+reqchecktolock = 5 // how many checkmarks required to be able to lock a row? (not including the 2/12 on the right side)
