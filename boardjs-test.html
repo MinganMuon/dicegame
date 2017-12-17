@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>boardjs-test</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+
+<script src="./board.js"></script>
+
+<body>
+
+<script>
+console.log("boardjs-test.html")
+
+var rowtest = new row(2,12);
+console.log(rowtest);
+
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+
+rowtest.nums[1] = true;
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+
+rowtest.nums[2] = true;
+rowtest.nums[3] = true;
+rowtest.nums[4] = true;
+rowtest.nums[5] = true;
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+
+</script>
+
+</body>
+</html>

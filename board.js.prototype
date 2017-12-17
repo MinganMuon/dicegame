@@ -17,7 +17,7 @@ board {
     penalties = 0 - limit of four penalty points
 
     clearboard() - initializes/clears rows and penalties
-    
+
     setboard(rows, penalties) - sets board to input
         - helper functions for setboard()?
         - functions to set individual rows?
@@ -27,8 +27,11 @@ board {
     - functions to get legal moves/check legality of proposed move
         - should the last two be somewhere else (move.js perhaps)?
             - because it involves moves on the board not a snapshot of the board
+            - also because it would rely on game mechanics such as whose turn it is, etc.
+                - that stuff shouldn't be in board.js
     
-    - functions to calculate score
+    calculatescore() - calculates the board's score
+        - perhaps add a per-row score calculator in the row object?
 }
 
 row {
