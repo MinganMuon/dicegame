@@ -1,0 +1,6 @@
+Prototyping for board.js
+
+Contains gameboard creation, manipulation, access, and helper functions
+Does not cover dice rolls, turns, or multiple boards
+Does calculate score of current board
+
