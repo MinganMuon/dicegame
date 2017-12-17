@@ -16,7 +16,7 @@ function row (startnumber, endnumber) {
                        // it's assumed that the board's player locked the board and gained the extra checkmark.
 
     // how many checkmarks does this row have? this doesn't include the extra checkmark (at least not right now)
-    this.countcheckmarks = function(){
+    this.countcheckmarks = function() {
         let checks = 0;
         for (var i = 0; i < this.nums.length; i++) {
             if (this.nums[i] == true) {
@@ -33,5 +33,13 @@ function row (startnumber, endnumber) {
             return true;
         }
         return false;
+    }
+
+    // gives the score of this row
+    // perhaps externalize this function eventually?
+    this.scorerow = function() {
+        let checks = this.countcheckmarks();
+        let score = Math.floor( checks * (checks + 1) / 2 );
+        return score;
     }
 }

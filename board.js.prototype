@@ -31,7 +31,6 @@ board {
                 - that stuff shouldn't be in board.js
     
     calculatescore() - calculates the board's score
-        - perhaps add a per-row score calculator in the row object?
 }
 
 row {
@@ -42,6 +41,8 @@ row {
     rowlocked = bool - is the row locked? - it's assumed that the board's player locked the board and gained the extra checkmark.
 
     islockable() - is this row lockable (has more than reqchecktolock checkmarks)?
+    countcheckmarks() - how many checkmarks does this row have? this doesn't include the extra checkmark (at least not right now)
+    scorerow() - gives the score of this row
 }
 
 === Data prototype
