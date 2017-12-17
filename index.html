@@ -55,17 +55,26 @@
 
     loader
         .add("img/red_tiles.png")
+        .add("img/red_tiles_checked.png")
         .load(setup);
 
     let redtiles = [];
+    let redtiletex = [];
+    let redtiletexchecked = [];
     function setup() {
         let red_tiles_tex = TextureCache["img/red_tiles.png"];
+        let red_tiles_tex_checked = TextureCache["img/red_tiles_checked.png"];
 
         // helper function
         var doredtile = function(i) {
             let j = i; if (j == 13) { j = 0; }
             let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
-            tile_tex = new Texture(red_tiles_tex, rectangle)
+
+            let tile_tex_checked = new Texture(red_tiles_tex_checked, rectangle);
+            redtiletexchecked.push(tile_tex_checked);
+            let tile_tex = new Texture(red_tiles_tex, rectangle);
+            redtiletex.push(tile_tex);
+
             let tile = new Sprite(tile_tex);
             tile.y = 10;
             tile.x = 10 + (i-2)*tile.width + 5*(i-2);
@@ -86,8 +95,14 @@
     }
 
     function tileOnClick () {
-        this.checked = true;
-        this.visible = false;
+        locInTexArray = Math.abs(this.number - 13); // big hack here
+        if (this.checked == true){
+            this.checked = false;
+            this.setTexture(redtiletex[locInTexArray]);
+        } else {
+            this.checked = true;
+            this.setTexture(redtiletexchecked[locInTexArray]);
+        }
     }
 
 </script>
