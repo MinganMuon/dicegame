@@ -9,102 +9,15 @@
     </style>
 </head>
 
-<script src="pixi/pixi.min.js"></script>
+<body onload="init();">
 
-<body>
+<script src="pixi/pixi.min.js"></script>
+<script src="./main.js"></script>
 
 <script>
-    let Application = PIXI.Application,
-    loader = PIXI.loader,
-    resources = PIXI.loader.resources,
-    Sprite = PIXI.Sprite,
-    Texture = PIXI.Texture,
-    TextureCache = PIXI.utils.TextureCache;
-
-	let type = "WebGL";
-    if(!PIXI.utils.isWebGLSupported()){
-      type = "canvas";
+    function init(){
+        main = new Main();
     }
-
-    PIXI.utils.sayHello(type);
-
-    let app = new Application({transparent: true});
-
-    app.renderer.view.style.position = "absolute";
-    app.renderer.view.style.display = "block";
-    app.renderer.autoResize = true;
-    app.renderer.resize(window.innerWidth, window.innerHeight);
-
-    document.body.appendChild(app.view);
-
-    /* loader
-        .add("img/rednumbers.json")
-        .load(setup);
-    
-    function setup() {
-        var id = loader.resources["img/rednumbers.json"].textures; 
-        for (i = 0; i < 10; i++) { 
-            let rn = new Sprite(id["red_" + i + ".png"]);
-            rn.y = 10;
-            rn.x = 10 + i*rn.width + 5*i;
-            rn.interactive = true;
-            rn.on('pointerdown', rnOnClick);
-            app.stage.addChild(rn);
-        }
-    } */
-
-    loader
-        .add("img/red_tiles.png")
-        .add("img/red_tiles_checked.png")
-        .load(setup);
-
-    let redtiles = [];
-    let redtiletex = [];
-    let redtiletexchecked = [];
-    function setup() {
-        let red_tiles_tex = TextureCache["img/red_tiles.png"];
-        let red_tiles_tex_checked = TextureCache["img/red_tiles_checked.png"];
-
-        // helper function
-        var doredtile = function(i) {
-            let j = i; if (j == 13) { j = 0; }
-            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
-
-            let tile_tex_checked = new Texture(red_tiles_tex_checked, rectangle);
-            redtiletexchecked.push(tile_tex_checked);
-            let tile_tex = new Texture(red_tiles_tex, rectangle);
-            redtiletex.push(tile_tex);
-
-            let tile = new Sprite(tile_tex);
-            tile.y = 10;
-            tile.x = 10 + (i-2)*tile.width + 5*(i-2);
-            tile.interactive = true;
-            tile.on('pointerdown', tileOnClick);
-            tile.color = "red";
-            tile.number = i;
-            tile.checked = false;
-            redtiles.push(tile);
-            app.stage.addChild(tile);
-        }
-
-        // init redtiles
-        for (i = 13; i > 1; i--){
-            doredtile(i);
-        }
-
-    }
-
-    function tileOnClick () {
-        locInTexArray = Math.abs(this.number - 13); // big hack here
-        if (this.checked == true){
-            this.checked = false;
-            this.setTexture(redtiletex[locInTexArray]);
-        } else {
-            this.checked = true;
-            this.setTexture(redtiletexchecked[locInTexArray]);
-        }
-    }
-
 </script>
 
 </body>
