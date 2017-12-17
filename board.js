@@ -58,8 +58,10 @@ function row (startnumber, endnumber) {
     // perhaps externalize this function eventually?
     this.scorerow = function() {
         let checks = this.countcheckmarks();
+        if (this.rowlocked == true) {
+            checks = checks + 1; // this accounts for the extra checkmark gained when locking a row
+        }
         let score = Math.floor( checks * (checks + 1) / 2 );
-        // THIS DOESN'T TAKE INTO ACCOUNT THE EXTRA CHECKMARK THIS NEEDS TO BE FIXED!
         return score;
     }
 }

@@ -19,7 +19,6 @@ console.log("boardjs-test.html")
 // row testing
 // -----------
 
-/*
 var rowtest = new row(2,12);
 console.log(rowtest);
 
@@ -39,10 +38,12 @@ rowtest.nums[5] = true;
 console.log(rowtest.countcheckmarks());
 console.log(rowtest.islockable());
 console.log(rowtest.scorerow());
-*/
+rowtest.rowlocked = true;
+console.log(rowtest.scorerow());
 
 // board testing
 // -------------
+console.log("------------------");
 
 var board = new board();
 board.rows[0].nums[3] = true;
