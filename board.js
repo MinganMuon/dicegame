@@ -1,5 +1,24 @@
 // board.js
 
+function board () {
+    this.rows = [];
+    this.rows.push(new row(2,12)); // red row
+    this.rows.push(new row(2,12)); // yellow row
+    this.rows.push(new row(12,2)); // green row
+    this.rows.push(new row(12,2)); // blue row
+
+    this.penalties = 0;
+
+    this.scoreboard = function () {
+        let score = 0;
+        for (var i = 0; i < this.rows.length; i++) {
+            score = score + this.rows[i].scorerow();
+        }
+        score = score - 5*this.penalties;
+        return score;
+    }
+}
+
 // how many checkmarks required to be able to lock a row? (not including the 2/12 on the right side)
 var reqchecktolock = 5;
 
@@ -40,6 +59,7 @@ function row (startnumber, endnumber) {
     this.scorerow = function() {
         let checks = this.countcheckmarks();
         let score = Math.floor( checks * (checks + 1) / 2 );
+        // THIS DOESN'T TAKE INTO ACCOUNT THE EXTRA CHECKMARK THIS NEEDS TO BE FIXED!
         return score;
     }
 }
