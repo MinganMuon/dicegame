@@ -129,6 +129,19 @@ function Main() {
             this.app.stage.addChild(pbox);
         }
         console.log("Penalties sprites done");
+        // score stuff
+        var scoretext = new PIXI.Text('Score: ' + '0');
+        scoretext.x = 500;
+        scoretext.y = 235;
+        this.app.stage.addChild(scoretext);
+        // this is obviously resource-intensive and basically the worst way to do this so it needs to be fixed
+        this.app.ticker.add(function() {
+            scoretext.text = 'Score: ' + self.theboard.scoreboard();
+            // BUGS - doesn't include the far left tile
+            // TO DO - make it include the extra tile
+            //       - fix this score updating thing to be not happening every frame
+        });
+        console.log("Score sprite done");
         console.log("All sprites done.");
     }
 
