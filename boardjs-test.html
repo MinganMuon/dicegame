@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>boardjs-test</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+
+<script src="./board.js"></script>
+
+<body>
+
+<script>
+console.log("boardjs-test.html")
+
+// row testing
+// -----------
+
+var rowtest = new row(2,12);
+console.log(rowtest);
+
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+console.log(rowtest.scorerow());
+
+rowtest.nums[1] = true;
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+console.log(rowtest.scorerow());
+
+rowtest.nums[2] = true;
+rowtest.nums[3] = true;
+rowtest.nums[4] = true;
+rowtest.nums[5] = true;
+console.log(rowtest.countcheckmarks());
+console.log(rowtest.islockable());
+console.log(rowtest.scorerow());
+rowtest.rowlocked = true;
+console.log(rowtest.scorerow());
+
+// board testing
+// -------------
+console.log("------------------");
+
+var board = new board();
+board.rows[0].nums[3] = true;
+board.rows[1].nums[3] = true;
+board.rows[2].nums[3] = true;
+board.rows[3].nums[3] = true;
+board.rows[1].nums[5] = true;
+board.rows[0].nums[6] = true;
+console.log(board.rows[0].scorerow());
+console.log(board.rows[1].scorerow());
+console.log(board.rows[2].scorerow());
+console.log(board.rows[3].scorerow());
+console.log(board.scoreboard());
+
+</script>
+
+</body>
+</html>
