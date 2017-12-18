@@ -3,6 +3,18 @@
 function Main() {
     var self = this;
 
+    this.tileOnClick = function() {
+        let rowno = this.rownum;
+        let num = this.number;
+        if ( self.theboard.rows[rowno].nums[num] == true ) {
+            self.theboard.rows[rowno].nums[num] = false;
+            this.setTexture(this.uncheckedtex);
+        } else {
+            self.theboard.rows[rowno].nums[num] = true;
+            this.setTexture(this.checkedtex);
+        }
+    }
+
     this.setuprow = function(rownumber, uctex, ctex) {
         let startno = self.theboard.rows[rownumber].startnum;
         let endno = self.theboard.rows[rownumber].endnum;
@@ -21,7 +33,7 @@ function Main() {
                 tile.y = 10 + (rownumber)*tile.height + (rownumber)*5;
                 tile.x = 10 + (12-i)*tile.width + 5*(12-i);
                 tile.interactive = true;
-                // tile.on('pointerdown', this.tileOnClick);
+                tile.on('pointerdown', this.tileOnClick);
                 tile.checkedtex = tile_tex_checked;
                 tile.uncheckedtex = tile_tex;
                 if (i == 1) {
@@ -29,6 +41,7 @@ function Main() {
                 } else {
                     tile.number = (12-i) - 1; // -1 because arrays are zero-indexed
                 }
+                tile.rownum = rownumber;
                 this.app.stage.addChild(tile);
             }
         } else {
@@ -43,7 +56,7 @@ function Main() {
                 tile.y = 10 + (rownumber)*tile.height + (rownumber)*5;
                 tile.x = 10 + (i-2)*tile.width + 5*(i-2);
                 tile.interactive = true;
-                // tile.on('pointerdown', this.tileOnClick);
+                tile.on('pointerdown', this.tileOnClick);
                 tile.checkedtex = tile_tex_checked;
                 tile.uncheckedtex = tile_tex;
                 if (i == 13) {
@@ -51,6 +64,7 @@ function Main() {
                 } else {
                     tile.number = (i - 2) - 1; // -1 because arrays are zero-indexed
                 }
+                tile.rownum = rownumber;
                 this.app.stage.addChild(tile);
             }
         }
