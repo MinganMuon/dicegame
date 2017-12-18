@@ -15,6 +15,19 @@ function Main() {
         }
     }
 
+    this.pboxOnClick = function() {
+        psofar = self.theboard.penalties;
+        if (this.number == psofar + 1) {
+            // check it!
+            this.setTexture(this.checkedtex);
+            self.theboard.penalties = self.theboard.penalties + 1;
+        } else if (this.number == psofar) {
+            // uncheck it!
+            this.setTexture(this.uncheckedtex);
+            self.theboard.penalties = self.theboard.penalties - 1;
+        }
+    }
+
     this.setuprow = function(rownumber, uctex, ctex) {
         let startno = self.theboard.rows[rownumber].startnum;
         let endno = self.theboard.rows[rownumber].endnum;
@@ -95,6 +108,27 @@ function Main() {
         let blue_tiles_tex_checked = PIXI.utils.TextureCache["img/blue_tiles_checked.png"];
         this.setuprow(3, blue_tiles_tex, blue_tiles_tex_checked);
         console.log("Blue sprites done");
+        // penalties text
+        let penalties_text_tex = PIXI.utils.TextureCache["img/penalties_text.png"];
+        let ptt = new PIXI.Sprite(penalties_text_tex);
+        ptt.x = 10;
+        ptt.y = 235;
+        this.app.stage.addChild(ptt);
+        // penalty boxes
+        let penalties_box_tex = PIXI.utils.TextureCache["img/penalties_box.png"];
+        let penalties_box_checked_tex = PIXI.utils.TextureCache["img/penalties_box_checked.png"];
+        for (let k = 0; k < 4; k++) {
+            let pbox = new PIXI.Sprite(penalties_box_tex);
+            pbox.y = 235;
+            pbox.x = 30 + 150 + 10 + 50*k + 20*k;
+            pbox.interactive = true;
+            pbox.on('pointerdown', this.pboxOnClick);
+            pbox.checkedtex = penalties_box_checked_tex;
+            pbox.uncheckedtex = penalties_box_tex;
+            pbox.number = k + 1;
+            this.app.stage.addChild(pbox);
+        }
+        console.log("Penalties sprites done");
         console.log("All sprites done.");
     }
 
@@ -116,5 +150,8 @@ function Main() {
     .add("img/green_tiles_checked.png")
     .add("img/blue_tiles.png")
     .add("img/blue_tiles_checked.png")
+    .add("img/penalties_text.png")
+    .add("img/penalties_box.png")
+    .add("img/penalties_box_checked.png")
     .load(this.setupboard.bind(this));
 }
