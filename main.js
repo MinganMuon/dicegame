@@ -119,11 +119,15 @@ function Main() {
         this.setuprow(3, blue_tiles_tex, blue_tiles_tex_checked);
         console.log("Blue sprites done");
         // penalties text
-        let penalties_text_tex = PIXI.utils.TextureCache["img/penalties_text.png"];
+        /*let penalties_text_tex = PIXI.utils.TextureCache["img/penalties_text.png"];
         let ptt = new PIXI.Sprite(penalties_text_tex);
         ptt.x = 10;
         ptt.y = 235;
-        this.app.stage.addChild(ptt);
+        this.app.stage.addChild(ptt);*/
+        var ptext = new PIXI.Text('Penalties:');
+        ptext.x = 30;
+        ptext.y = 235;
+        this.app.stage.addChild(ptext);
         // penalty boxes
         let penalties_box_tex = PIXI.utils.TextureCache["img/penalties_box.png"];
         let penalties_box_checked_tex = PIXI.utils.TextureCache["img/penalties_box_checked.png"];
