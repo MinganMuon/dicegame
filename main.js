@@ -6,12 +6,22 @@ function Main() {
     this.tileOnClick = function() {
         let rowno = this.rownum;
         let num = this.number;
-        if ( self.theboard.rows[rowno].nums[num] == true ) {
-            self.theboard.rows[rowno].nums[num] = false;
-            this.setTexture(this.uncheckedtex);
+        if (num == -1) { // if the extra tile
+            if (self.theboard.rows[rowno].rowlocked == true) {
+                self.theboard.rows[rowno].rowlocked = false;
+                this.setTexture(this.uncheckedtex);
+            } else { 
+                self.theboard.rows[rowno].rowlocked = true;
+                this.setTexture(this.checkedtex);
+            }
         } else {
-            self.theboard.rows[rowno].nums[num] = true;
-            this.setTexture(this.checkedtex);
+            if ( self.theboard.rows[rowno].nums[num] == true ) {
+                self.theboard.rows[rowno].nums[num] = false;
+                this.setTexture(this.uncheckedtex);
+            } else {
+                self.theboard.rows[rowno].nums[num] = true;
+                this.setTexture(this.checkedtex);
+            }
         }
     }
 
@@ -52,7 +62,7 @@ function Main() {
                 if (i == 1) {
                     tile.number = -1;
                 } else {
-                    tile.number = (12-i) - 1; // -1 because arrays are zero-indexed
+                    tile.number = (12-i);
                 }
                 tile.rownum = rownumber;
                 this.app.stage.addChild(tile);
@@ -75,7 +85,7 @@ function Main() {
                 if (i == 13) {
                     tile.number = -1;
                 } else {
-                    tile.number = (i - 2) - 1; // -1 because arrays are zero-indexed
+                    tile.number = (i - 2);
                 }
                 tile.rownum = rownumber;
                 this.app.stage.addChild(tile);
@@ -137,9 +147,7 @@ function Main() {
         // this is obviously resource-intensive and basically the worst way to do this so it needs to be fixed
         this.app.ticker.add(function() {
             scoretext.text = 'Score: ' + self.theboard.scoreboard();
-            // BUGS - doesn't include the far left tile
-            // TO DO - make it include the extra tile
-            //       - fix this score updating thing to be not happening every frame
+            // TO DO - fix this score updating thing to be not happening every frame
         });
         console.log("Score sprite done");
         console.log("All sprites done.");
