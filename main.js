@@ -161,9 +161,13 @@ function Main() {
     this.app = new PIXI.Application({transparent: true});
     this.app.renderer.view.style.position = "absolute";
     this.app.renderer.view.style.display = "block";
-    this.app.renderer.autoResize = true;
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    this.app.renderer.resize(675, 300);
     document.body.appendChild(this.app.view);
+
+    scaleToWindow(self.app.renderer.view, "#eee");
+    window.addEventListener("resize", function(event){ 
+        scaleToWindow(self.app.renderer.view, "#eee");
+    });
 
     console.log("Loading textures...");
     PIXI.loader
