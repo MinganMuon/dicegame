@@ -7,12 +7,22 @@ function Main() {
         let rowno = this.rownum;
         let num = this.number;
         if (num == -1) { // if the extra tile
+            // if not locked and not lined, lock and line
+            // if locked and lined, unlock
+            // if not locked and lined, unline
             if (self.theboard.rows[rowno].rowlocked == true) {
                 self.theboard.rows[rowno].rowlocked = false;
                 this.setTexture(this.uncheckedtex);
             } else { 
-                self.theboard.rows[rowno].rowlocked = true;
-                this.setTexture(this.checkedtex);
+                if (this.lined == true) {
+                    this.lined = false;
+                    self.app.stage.getChildByName(rowno.toString()).visible = false;
+                } else {
+                    self.theboard.rows[rowno].rowlocked = true;
+                    this.setTexture(this.checkedtex);
+                    this.lined = true;
+                    self.app.stage.getChildByName(rowno.toString()).visible = true;
+                }
             }
         } else {
             if ( self.theboard.rows[rowno].nums[num] == true ) {
@@ -61,6 +71,7 @@ function Main() {
                 tile.uncheckedtex = tile_tex;
                 if (i == 1) {
                     tile.number = -1;
+                    tile.lined = false;
                 } else {
                     tile.number = (12-i);
                 }
@@ -84,6 +95,7 @@ function Main() {
                 tile.uncheckedtex = tile_tex;
                 if (i == 13) {
                     tile.number = -1;
+                    tile.lined = false;
                 } else {
                     tile.number = (i - 2);
                 }
@@ -154,6 +166,17 @@ function Main() {
             // TO DO - fix this score updating thing to be not happening every frame
         });
         console.log("Score sprite done");
+        // init lock lines
+        let lockline_tex = PIXI.utils.TextureCache["img/lockline.png"];
+        for (i = 0; i < 5; i++) {
+            let lockline = new PIXI.Sprite(lockline_tex);
+            lockline.x = 10;
+            lockline.y = 10 + 5*i + 50*i;
+            lockline.visible = false;
+            lockline.name = i.toString();
+            this.app.stage.addChild(lockline);
+        }
+        console.log("Lock line sprites done.");
         console.log("All sprites done.");
     }
 
@@ -182,5 +205,6 @@ function Main() {
     .add("img/penalties_text.png")
     .add("img/penalties_box.png")
     .add("img/penalties_box_checked.png")
+    .add("img/lockline.png")
     .load(this.setupboard.bind(this));
 }
