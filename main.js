@@ -35,6 +35,22 @@ function Main() {
         }
     }
 
+    this.dieOnClick = function() {
+        // in the future, clean up this ugly repetition...
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('red').setTexture(self.app.stage.getChildByName('red').tiletexs[randomnum]); // remember array is zero-indexed
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('yellow').setTexture(self.app.stage.getChildByName('yellow').tiletexs[randomnum]); // remember array is zero-indexed
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('green').setTexture(self.app.stage.getChildByName('green').tiletexs[randomnum]); // remember array is zero-indexed
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('blue').setTexture(self.app.stage.getChildByName('blue').tiletexs[randomnum]); // remember array is zero-indexed
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('1white').setTexture(self.app.stage.getChildByName('1white').tiletexs[randomnum]); // remember array is zero-indexed
+        var randomnum = Math.floor(Math.random() * 6); // random number between 0 and 5
+        self.app.stage.getChildByName('2white').setTexture(self.app.stage.getChildByName('2white').tiletexs[randomnum]); // remember array is zero-indexed
+    }
+
     this.pboxOnClick = function() {
         psofar = self.theboard.penalties;
         if (this.number == psofar + 1) {
@@ -131,22 +147,17 @@ function Main() {
         this.setuprow(3, blue_tiles_tex, blue_tiles_tex_checked);
         console.log("Blue sprites done");
         // penalties text
-        /*let penalties_text_tex = PIXI.utils.TextureCache["img/penalties_text.png"];
-        let ptt = new PIXI.Sprite(penalties_text_tex);
-        ptt.x = 10;
-        ptt.y = 235;
-        this.app.stage.addChild(ptt);*/
-        var ptext = new PIXI.Text('Penalties:');
-        ptext.x = 30;
-        ptext.y = 235;
-        this.app.stage.addChild(ptext);
+        //var ptext = new PIXI.Text('Penalties:');
+        //ptext.x = 30;
+        //ptext.y = 235;
+        //this.app.stage.addChild(ptext);
         // penalty boxes
         let penalties_box_tex = PIXI.utils.TextureCache["img/penalties_box.png"];
         let penalties_box_checked_tex = PIXI.utils.TextureCache["img/penalties_box_checked.png"];
         for (let k = 0; k < 4; k++) {
             let pbox = new PIXI.Sprite(penalties_box_tex);
             pbox.y = 235;
-            pbox.x = 30 + 150 + 10 + 50*k + 20*k;
+            pbox.x = 10 + 50*k + 5*k; // 30 + 50*k + 20*k + 150 + 10
             pbox.interactive = true;
             pbox.on('pointerdown', this.pboxOnClick);
             pbox.checkedtex = penalties_box_checked_tex;
@@ -156,13 +167,17 @@ function Main() {
         }
         console.log("Penalties sprites done");
         // score stuff
-        var scoretext = new PIXI.Text('Score: ' + '0');
-        scoretext.x = 500;
-        scoretext.y = 235;
+        var scoretext = new PIXI.Text('Score: ');
+        scoretext.x = 245; // 500;
+        scoretext.y = 225;
         this.app.stage.addChild(scoretext);
+        var scoredisplay = new PIXI.Text('0');
+        scoredisplay.x = 265;
+        scoredisplay.y = 255;
+        this.app.stage.addChild(scoredisplay);
         // this is obviously resource-intensive and basically the worst way to do this so it needs to be fixed
         this.app.ticker.add(function() {
-            scoretext.text = 'Score: ' + self.theboard.scoreboard();
+            scoredisplay.text = self.theboard.scoreboard();
             // TO DO - fix this score updating thing to be not happening every frame
         });
         console.log("Score sprite done");
@@ -177,6 +192,107 @@ function Main() {
             this.app.stage.addChild(lockline);
         }
         console.log("Lock line sprites done.");
+        // init red die
+        let tile = new PIXI.Sprite(red_tiles_tex);
+        tile.y = 235;
+        tile.x = 340;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(red_tiles_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = 'red';
+        this.app.stage.addChild(tile);
+        // init yellow die
+        tile = new PIXI.Sprite(yellow_tiles_tex);
+        tile.y = 235;
+        tile.x = 340 + 50 + 5;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(yellow_tiles_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = 'yellow';
+        this.app.stage.addChild(tile);
+        // init green die
+        tile = new PIXI.Sprite(green_tiles_tex);
+        tile.y = 235;
+        tile.x = 340 + 2*50 + 2*5;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(green_tiles_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = 'green';
+        this.app.stage.addChild(tile);
+        // init blue die
+        tile = new PIXI.Sprite(blue_tiles_tex);
+        tile.y = 235;
+        tile.x = 340 + 3*50 + 3*5;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(blue_tiles_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = 'blue';
+        this.app.stage.addChild(tile);
+        // init white die
+        // white tile 1
+        let white_dice_tex = PIXI.utils.TextureCache["img/white_dice.png"];
+        tile = new PIXI.Sprite(white_dice_tex);
+        tile.y = 235;
+        tile.x = 340 + 4*50 + 4*5;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(white_dice_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = '1white';
+        this.app.stage.addChild(tile);
+        // white tile 2
+        tile = new PIXI.Sprite(white_dice_tex);
+        tile.y = 235;
+        tile.x = 340 + 5*50 + 5*5;
+        tile.interactive = true;
+        tile.on('pointerdown', this.dieOnClick);
+        tile.tiletexs = new Array();
+        for (let i = 1; i < 7; i++){
+            let j = i; // if (i == 1) { j = 0;}
+            let rectangle = new PIXI.Rectangle(50*(j%4), 50*(Math.floor(j/4)), 50, 50);
+            let tile_tex = new PIXI.Texture(white_dice_tex, rectangle);
+            tile.tiletexs.push(tile_tex);
+        }
+        tile.setTexture(tile.tiletexs[0]);
+        tile.name = '2white';
+        this.app.stage.addChild(tile);
+
+        console.log("Dice sprites done.");
+
         console.log("All sprites done.");
     }
 
@@ -206,5 +322,6 @@ function Main() {
     .add("img/penalties_box.png")
     .add("img/penalties_box_checked.png")
     .add("img/lockline.png")
+    .add("img/white_dice.png")
     .load(this.setupboard.bind(this));
 }
